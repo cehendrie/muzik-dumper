@@ -34,10 +34,11 @@ def get_filepaths(path):
         file_paths.append(path)
     else:
         for root, _, files in os.walk(path):
-            for filename in files:
-                if filename.startswith(".") is False:
-                    filepath = os.path.join(root, filename)
-                    file_paths.append(filepath)  # Add it to the list.
+            if (root == path):  # process only file in path (no sub-dirs)
+                for filename in files:
+                    if filename.startswith(".") is False:
+                        filepath = os.path.join(root, filename)
+                        file_paths.append(filepath)  # Add it to the list.
     return file_paths
 
 def main():
