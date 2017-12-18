@@ -10,15 +10,17 @@ from argparse import ArgumentParser
 from library import Library
 
 
-def build_argparse():
+def build_argparser():
     """
     Build a command line parser.
     """
-    cli = ArgumentParser()
-    cli.add_argument('--path',
-                     required=True,
-                     help='a path to the file representing a music library')
-    return cli
+    argparser = ArgumentParser()
+    argparser.add_argument(
+        '-f',
+        '--files',
+        required=True,
+        help='a music file or directory of music files')
+    return argparser
 
 def get_filepaths(path):
     """
@@ -43,10 +45,10 @@ def main():
     The core entry point.
     """
     
-    cli = build_argparse()
+    cli = build_argparser()
     args = cli.parse_args()
 
-    files = get_filepaths(args.path)
+    files = get_filepaths(args.files)
 
     library = Library(files)
     entries = library.load()
