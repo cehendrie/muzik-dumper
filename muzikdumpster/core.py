@@ -5,6 +5,7 @@ A process script to read a file of album information and sort by band and releas
 """
 
 import os
+import datetime
 from operator import attrgetter
 from argparse import ArgumentParser
 from library import Library
@@ -20,6 +21,11 @@ def build_argparser():
         '--files',
         required=True,
         help='a music file or directory of music files')
+    argparser.add_argument(
+        '-a',
+        '--archive',
+        action='store_true',
+        help='store a file of output to archive directory')
     return argparser
 
 def get_filepaths(path):
@@ -57,6 +63,22 @@ def main():
 
     for entry in entries:
         print(entry.raw)
+
+    if args.archive is True:
+        now = datetime.datetime.now()
+        filename = "music-collection-{}{}{}-{}{}{}.txt".format(
+            now.year, 
+            now.month, 
+            now.day, 
+            now.hour, 
+            now.minute, 
+            now.second)
+        print("opening archive file: {}".format(filename))
+        f = open(filename, "w+")
+        for entry in entries:
+            print(entry.raw)
+            f.write(entry.raw + "\n")
+        f.close()
 
 if __name__ == '__main__':
     main()
