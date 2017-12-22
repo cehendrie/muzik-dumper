@@ -25,7 +25,7 @@ def build_argparser():
         '-a',
         '--archive',
         action='store_true',
-        help='store a file of output to archive directory')
+        help='create file of results')
     return argparser
 
 def get_filepaths(path):
@@ -47,6 +47,30 @@ def get_filepaths(path):
                         file_paths.append(filepath)  # Add it to the list.
     return file_paths
 
+def print_results(entries):
+    print("[Info] printing results...")
+    print('\n')
+    for entry in entries:
+        print(entry.raw)
+    print('\n')
+    print('[Info] printing results complete')
+
+def archive_results(entries):
+    now = datetime.datetime.now()
+    filename = "muzik-dumpster-archive-{}{}{}:{}{}{}.txt".format(
+        now.year, 
+        now.month, 
+        now.day, 
+        now.hour, 
+        now.minute, 
+        now.second)
+    print("[Info] archiving results to: {}".format(filename))
+    f = open(filename, "w+")
+    for entry in entries:
+        f.write(entry.raw + "\n")
+    f.close()
+    print('[Info] archiving results complete')
+
 def main():
     """
     The core entry point.
@@ -61,24 +85,10 @@ def main():
     entries = library.load()
     entries = sorted(entries, key=attrgetter('artist', 'year'))
 
-    for entry in entries:
-        print(entry.raw)
-
-    if args.archive is True:
-        now = datetime.datetime.now()
-        filename = "music-collection-{}{}{}-{}{}{}.txt".format(
-            now.year, 
-            now.month, 
-            now.day, 
-            now.hour, 
-            now.minute, 
-            now.second)
-        print("opening archive file: {}".format(filename))
-        f = open(filename, "w+")
-        for entry in entries:
-            print(entry.raw)
-            f.write(entry.raw + "\n")
-        f.close()
+    if args.archive is False:
+        print_results(entries)
+    else:
+        archive_results(entries)
 
 if __name__ == '__main__':
     main()
