@@ -81,6 +81,12 @@ def main():
 
     files = get_filepaths(args.files)
 
+    if len(files) == 0:
+        print('[Info] no files to process')
+        exit(0)
+    
+    print("[Info] processing {} files".format(len(files)))
+    
     library = Library(files)
     entries = library.load()
     entries = sorted(entries, key=attrgetter('artist', 'year'))
