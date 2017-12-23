@@ -48,6 +48,9 @@ def get_filepaths(path):
     return file_paths
 
 def print_results(entries):
+    """
+    Print results to the console.
+    """
     print("[Info] printing results...")
     print('\n')
     for entry in entries:
@@ -56,6 +59,9 @@ def print_results(entries):
     print('[Info] printing results complete')
 
 def archive_results(entries):
+    """
+    Store the results in a text file.
+    """
     now = datetime.datetime.now()
     filename = "muzik-dumpster-archive-{}{}{}:{}{}{}.txt".format(
         now.year, 
@@ -86,7 +92,7 @@ def main():
         exit(0)
     
     print("[Info] processing {} files".format(len(files)))
-    
+
     library = Library(files)
     entries = library.load()
     entries = sorted(entries, key=attrgetter('artist', 'year'))
