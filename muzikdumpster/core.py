@@ -8,7 +8,7 @@ import os
 import datetime
 from operator import attrgetter
 from argparse import ArgumentParser
-from library import Library
+from muzikdumpster.library import Library
 
 
 def build_argparser():
