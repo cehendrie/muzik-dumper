@@ -7,7 +7,6 @@ A process script to read a file of album information and sort by band and releas
 from argparse import ArgumentParser
 
 import os
-from operator import attrgetter
 
 from muzikdumpster.library import Library
 from muzikdumpster.result import Result
@@ -76,8 +75,7 @@ def main():
     print("[Info] processing {} files".format(len(files)))
 
     library = Library(files)
-    entries = library.load()
-    entries = sorted(entries, key=attrgetter('artist', 'year'))
+    entries = library.process_files()
 
     result = Result(entries)
     if args.archive is False:

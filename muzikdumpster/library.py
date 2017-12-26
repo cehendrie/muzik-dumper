@@ -1,6 +1,5 @@
-"""
-library.py
-"""
+from operator import attrgetter
+
 
 class FileObject(object):
     """
@@ -15,13 +14,13 @@ class FileObject(object):
         self.file.close()
         del self.file
 
+
 class Entry(object):
     """
     A container to hold one music library entry.
     """
 
     def __init__(self, artist, album, year, raw):
-
         self.artist = artist
         self.album = album
         self.year = year
@@ -36,27 +35,33 @@ class Entry(object):
 
 class Library(object):
     """
-    A music library loaed from a text file.
+    A music library loaded from a text file.
     """
 
     def __init__(self, files):
         self.files = files
 
-    def load(self):
+    def process_files(self):
         """
-        Parse a list of files representing a music library.
-        """
+        Process the list of files
 
+        :return: an array of sorted file entries
+        """
         entries = []
 
         for filename in self.files:
-            print("[Info] loading libary: {0}".format(filename))
+
+            print("[Info] loading library: {0}".format(filename))
+
             file_object = FileObject(filename)
             lines = file_object.file.readlines()
+
             for line in lines:
                 line = line.strip()
                 if len(line) > 0:
                     entries.append(self._build_entry(line))
+
+        entries = sorted(entries, key=attrgetter('artist', 'year'))
 
         return entries
 
@@ -70,4 +75,3 @@ class Library(object):
                       tokens[2].strip(),
                       line)
         return entry
-        
