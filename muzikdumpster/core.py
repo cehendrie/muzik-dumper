@@ -71,13 +71,13 @@ def archive_results(entries, archive_type):
     """
     Store the results in a text file.
     """
-    type = 'default'
+    process_type = 'default'
     if archive_type is not None:
-        type = archive_type
+        process_type = archive_type
 
     now = datetime.datetime.now()
     filename = "muzik-dumpster-archive-{}-{}{}{}:{}{}{}.txt".format(
-        type,
+        process_type,
         now.year,
         now.month, 
         now.day, 
