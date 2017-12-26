@@ -4,11 +4,13 @@ core
 A process script to read a file of album information and sort by band and release year
 """
 
-import os
-import datetime
-from operator import attrgetter
 from argparse import ArgumentParser
+
+import os
+from operator import attrgetter
+
 from muzikdumpster.library import Library
+from muzikdumpster.result import Result
 
 
 def build_argparser():
@@ -30,7 +32,7 @@ def build_argparser():
         '-t',
         '--archive-type',
         required=False,
-        default=None,
+        default='unknown_type',
         help='type of file(s) being processed')
     return argparser
 
@@ -57,69 +59,31 @@ def get_filepaths(path):
     return dir_path, file_paths
 
 
-def print_results(entries):
-    """
-    Print results to the console.
-    """
-    print("[Info] printing results...")
-    print('\n')
-    for entry in entries:
-        print(entry.raw)
-    print('\n')
-    print('[Info] printing results complete')
-
-
-def archive_results(entries, archive_type, dir_path):
-    """
-    Store the results in a text file.
-    """
-    process_type = 'default'
-    if archive_type is not None:
-        process_type = archive_type
-
-    now = datetime.datetime.now()
-    filename = "muzik-dumpster-archive-{}-{}{}{}:{}{}{}.txt".format(
-        process_type,
-        now.year,
-        now.month, 
-        now.day, 
-        now.hour, 
-        now.minute, 
-        now.second)
-    print("[Info] archiving results to: {}".format(filename))
-
-    f = open(os.path.join(dir_path, filename), "w+")
-    for entry in entries:
-        f.write(entry.raw + "\n")
-    f.close()
-
-    print('[Info] archiving results complete')
-
-
 def main():
     """
     The core entry point.
     """
-    
+
     cli = build_argparser()
     args = cli.parse_args()
 
     dir_path, files = get_filepaths(args.files)
 
     if len(files) == 0:
-        print('[Info] no files to process')
+        print('[Info] no files to process. Exiting...')
         exit(0)
-    
+
     print("[Info] processing {} files".format(len(files)))
 
     library = Library(files)
     entries = library.load()
     entries = sorted(entries, key=attrgetter('artist', 'year'))
 
+    result = Result(entries)
     if args.archive is False:
-        print_results(entries)
+        result.print()
     else:
-        archive_results(entries, args.archive_type, dir_path)
+        result.archive(dir_path, args.archive_type)
 
 
 if __name__ == '__main__':
