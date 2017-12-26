@@ -34,6 +34,7 @@ def build_argparser():
         help='type of file(s) being processed')
     return argparser
 
+
 def get_filepaths(path):
     """
     This function will generate the file names in a directory
@@ -53,6 +54,7 @@ def get_filepaths(path):
                         file_paths.append(filepath)  # Add it to the list.
     return file_paths
 
+
 def print_results(entries):
     """
     Print results to the console.
@@ -63,6 +65,7 @@ def print_results(entries):
         print(entry.raw)
     print('\n')
     print('[Info] printing results complete')
+
 
 def archive_results(entries, archive_type):
     """
@@ -88,6 +91,7 @@ def archive_results(entries, archive_type):
     f.close()
     print('[Info] archiving results complete')
 
+
 def main():
     """
     The core entry point.
@@ -112,6 +116,7 @@ def main():
         print_results(entries)
     else:
         archive_results(entries, args.archive_type)
+
 
 if __name__ == '__main__':
     main()
