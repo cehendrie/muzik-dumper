@@ -45,14 +45,16 @@ def get_filepaths(path):
     file_paths = []
     if os.path.isfile(path):
         file_paths.append(path)
+        dir_path = os.path.dirname(path)
     else:
         for root, _, files in os.walk(path):
-            if (root == path):  # process only file in path (no sub-dirs)
+            if root == path:  # process only file in path (no sub-dirs)
                 for filename in files:
                     if filename.startswith(".") is False:
                         filepath = os.path.join(root, filename)
                         file_paths.append(filepath)  # Add it to the list.
-    return file_paths
+        dir_path = path
+    return dir_path, file_paths
 
 
 def print_results(entries):
@@ -67,7 +69,7 @@ def print_results(entries):
     print('[Info] printing results complete')
 
 
-def archive_results(entries, archive_type):
+def archive_results(entries, archive_type, dir_path):
     """
     Store the results in a text file.
     """
@@ -85,10 +87,12 @@ def archive_results(entries, archive_type):
         now.minute, 
         now.second)
     print("[Info] archiving results to: {}".format(filename))
-    f = open(filename, "w+")
+
+    f = open(os.path.join(dir_path, filename), "w+")
     for entry in entries:
         f.write(entry.raw + "\n")
     f.close()
+
     print('[Info] archiving results complete')
 
 
@@ -100,7 +104,7 @@ def main():
     cli = build_argparser()
     args = cli.parse_args()
 
-    files = get_filepaths(args.files)
+    dir_path, files = get_filepaths(args.files)
 
     if len(files) == 0:
         print('[Info] no files to process')
@@ -115,7 +119,7 @@ def main():
     if args.archive is False:
         print_results(entries)
     else:
-        archive_results(entries, args.archive_type)
+        archive_results(entries, args.archive_type, dir_path)
 
 
 if __name__ == '__main__':
