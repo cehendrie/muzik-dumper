@@ -26,6 +26,12 @@ def build_argparser():
         '--archive',
         action='store_true',
         help='create file of results')
+    argparser.add_argument(
+        '-t',
+        '--archive-type',
+        required=False,
+        default=None,
+        help='type of file(s) being processed')
     return argparser
 
 def get_filepaths(path):
@@ -58,13 +64,18 @@ def print_results(entries):
     print('\n')
     print('[Info] printing results complete')
 
-def archive_results(entries):
+def archive_results(entries, archive_type):
     """
     Store the results in a text file.
     """
+    type = 'default'
+    if archive_type is not None:
+        type = archive_type
+
     now = datetime.datetime.now()
-    filename = "muzik-dumpster-archive-{}{}{}:{}{}{}.txt".format(
-        now.year, 
+    filename = "muzik-dumpster-archive-{}-{}{}{}:{}{}{}.txt".format(
+        type,
+        now.year,
         now.month, 
         now.day, 
         now.hour, 
@@ -100,7 +111,7 @@ def main():
     if args.archive is False:
         print_results(entries)
     else:
-        archive_results(entries)
+        archive_results(entries, args.archive_type)
 
 if __name__ == '__main__':
     main()
