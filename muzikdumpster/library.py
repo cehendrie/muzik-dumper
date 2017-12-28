@@ -1,18 +1,6 @@
 from operator import attrgetter
 
-
-class FileObject(object):
-    """
-    A simple file object that cleans up after itself.
-    """
-
-    def __init__(self, filename):
-        # open a file filename in filepath in read and write mode
-        self.file = open(filename, 'r+')
-
-    def __del__(self):
-        self.file.close()
-        del self.file
+from muzikdumpster.fileobj import FileObj
 
 
 class Entry(object):
@@ -53,7 +41,7 @@ class Library(object):
 
             print("[Info] loading library: {0}".format(filename))
 
-            file_object = FileObject(filename)
+            file_object = FileObj(filename, 'r+')
             lines = file_object.file.readlines()
 
             for line in lines:

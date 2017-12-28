@@ -2,6 +2,8 @@ import datetime
 
 import os
 
+from muzikdumpster.fileobj import FileObj
+
 
 class Result(object):
     """
@@ -43,9 +45,9 @@ class Result(object):
 
         print("[Info] archiving results to: {}".format(archive_location))
 
-        f = open(archive_location, "w+")
+        f = FileObj(archive_location, 'w+')
         for entry in self.entries:
             f.write(entry.raw + "\n")
-        f.close()
+        # f.close()
 
         print('[Info] archiving results complete')
