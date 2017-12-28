@@ -47,7 +47,7 @@ class Result(object):
 
         f = FileObj(archive_location, 'w+')
         for entry in self.entries:
-            f.write(entry.raw + "\n")
+            f.file.write(entry.raw + "\n")
         # f.close()
 
         print('[Info] archiving results complete')
