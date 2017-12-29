@@ -2,7 +2,7 @@ import datetime
 
 import os
 
-from muzikdumpster.fileobj import FileObj
+from fileobj import FileObj
 
 
 class Result(object):

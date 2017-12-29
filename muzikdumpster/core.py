@@ -2,8 +2,8 @@ from argparse import ArgumentParser
 
 import os
 
-from muzikdumpster.library import Library
-from muzikdumpster.result import Result
+from library import Library
+from result import Result
 
 
 class MuzikDumpster(object):

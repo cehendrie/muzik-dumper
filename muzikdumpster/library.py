@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from muzikdumpster.fileobj import FileObj
+from fileobj import FileObj
 
 
 class Entry(object):
