@@ -14,14 +14,12 @@ $ muzik-dumpster -h
 
 file
 $ muzik-dumpster \
-    --archive \
-    -- type '[a media type]'
+    --media-type '[a media type]'
     -files /path/to/file
 
 directory
 $ muzik-dumpster \
-    --archive \
-    -- type 'all'
+    -- media-type 'all'
     -files /path/to/directory
 
 Development
