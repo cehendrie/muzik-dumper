@@ -2,26 +2,46 @@
 muzik-dumpster
 **************
 
+A Python 3.6 project for sorting text based music collections.
+The process will sort one file or a directory of files and store
+results in a file.
+
 Usage
 =====
 
-To display usage::
+help
+$ muzik-dumpster -h
 
-    muzi-dumpster -h
+file
+$ muzik-dumpster \
+    --archive \
+    -- type '[a media type]'
+    -files /path/to/file
 
-Local Development
-=================
+directory
+$ muzik-dumpster \
+    --archive \
+    -- type 'all'
+    -files /path/to/directory
 
-Start virtual environment
+Development
+===========
 
-Install app using pip
+- Start a python3 virtual environment
 
-    pip install .
+- Execute core.py to test changes
 
-Execute
+$ python muzikdumpster/core.py -a -f muzik-dumpster/tests/resources
 
-    muzik-dumpster -f /path/to/file/or/dir
+- Install into virtualenv site-packages to run as an executable
 
+$ pip install .
+
+or
+
+$ python setup.py sdist
+$ pip install dist/muzid-dumpster-x.x.x.tar.gz
+$ muzik-dumpster -a -f muzik-dumpster/tests/resources
 
 Packaging
 =========
