@@ -24,10 +24,11 @@ class MuzikDumpster(object):
         entries = library.process_files()
 
         result = Result(entries)
-        if args.archive is False:
-            result.print()
+
+        if args.debug is False:
+            result.archive(dir_path, args.media_type)
         else:
-            result.archive(dir_path, args.archive_type)
+            result.print()
 
     def _build_argparser(self):
         """
@@ -38,18 +39,18 @@ class MuzikDumpster(object):
             '-f',
             '--files',
             required=True,
-            help='a music file or directory of music files')
+            help='a music collection file or directory of music collection files')
         argparser.add_argument(
-            '-a',
-            '--archive',
-            action='store_true',
-            help='create file of results')
-        argparser.add_argument(
-            '-t',
-            '--archive-type',
+            '-m',
+            '--media-type',
             required=False,
             default='unknown_type',
             help='type of file(s) being processed')
+        argparser.add_argument(
+            '-d',
+            '--debug',
+            action='store_true',
+            help='dump results to standard out')
         return argparser
 
     def _get_filepaths(self, path):
