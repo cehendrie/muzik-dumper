@@ -1,9 +1,12 @@
 import os
 
+import datetime
+import os
+
 from argparse import ArgumentParser
 
 from albums import Albums
-from archive import Archive
+from fileobj import FileObj
 
 
 def arg_parser():
@@ -34,6 +37,12 @@ def get_filepaths(path):
         dir_path = path
     return dir_path, file_paths
 
+def generate_archive(albums, location):
+    archive_location = os.path.join(location, "muzik-dumpster-archive-{:%Y-%m-%d_%H:%M:%S}.txt".format(datetime.datetime.now()))
+    f = FileObj(archive_location, 'w+')
+    for album in albums:
+        f.file.write(album + "\n")
+
 def main():
     args = arg_parser()
     dir_path, files = get_filepaths(args.files)
@@ -45,8 +54,7 @@ def main():
     for album in collection:
         print(album)
     if args.archive == True:
-        arc = Archive(collection, dir_path)
-        arc.generate()
+        generate_archive(collection, dir_path)
 
 if __name__ == '__main__':
     main()
