@@ -6,7 +6,6 @@ class Album(object):
     """
     A container to hold one music library entry.
     """
-
     def __init__(self, artist, album, year, raw):
         self.artist = artist
         self.album = album
@@ -33,23 +32,22 @@ class Collection(object):
 
         :return: an array of sorted albums
         """
-        albums = []
-
+        collection = []
         for filename in self.files:
+            collection.extend(self._process_file(filename))
+        collection = sorted(collection, key=attrgetter('artist', 'year'))
+        return self._extract_raw(collection)
 
-            print("[Info] loading library: {0}".format(filename))
-
-            file_object = FileObj(filename, 'r+')
-            lines = file_object.file.readlines()
-
-            for line in lines:
-                line = line.strip()
-                if len(line) > 0:
-                    albums.append(self._build_album(line))
-
-        albums = sorted(albums, key=attrgetter('artist', 'year'))
-
-        return self._extract_raw(albums)
+    def _process_file(self, filename):
+        print("[debug] processing file, filename: {0}".format(filename))
+        fo = FileObj(filename, 'r+')
+        lines = fo.file.readlines()
+        albums = []
+        for line in lines:
+            line = line.strip()
+            if len(line) > 0:
+                albums.append(self._build_album(line))
+        return albums
 
     def _build_album(self, line):
         line = line.strip()
