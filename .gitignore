@@ -104,3 +104,6 @@ ENV/
 # IDEs
 .vscode
 .idea
+
+# macOs
+.DS_Store
