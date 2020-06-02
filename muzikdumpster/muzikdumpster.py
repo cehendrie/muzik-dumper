@@ -1,11 +1,9 @@
-import os
-
 import datetime
 import os
 
 from argparse import ArgumentParser
 
-from albums import Albums
+from collection import Collection
 from fileobj import FileObj
 
 
@@ -49,12 +47,12 @@ def main():
     if len(files) == 0:
         print("no file to process")
         exit(0)
-    albums = Albums(files)
-    collection = albums.build_collection()
-    for album in collection:
+    collection = Collection(files)
+    albums = collection.build_collection()
+    for album in albums:
         print(album)
     if args.archive == True:
-        generate_archive(collection, dir_path)
+        generate_archive(albums, dir_path)
 
 if __name__ == '__main__':
     main()
