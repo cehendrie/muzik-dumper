@@ -12,34 +12,19 @@ Usage
 help
 $ muzik-dumpster -h
 
-file
-$ muzik-dumpster \
-    --media-type '[a media type]'
-    -files /path/to/file
+files
+$ muzik-dumpster -files /path/to/file/or/directory
 
-directory
-$ muzik-dumpster \
-    -- media-type 'all'
-    -files /path/to/directory
+files with archive
+$ muzik-dumpster -a -files /path/to/file/or/directory
 
 Development
 ===========
 
 - Start a python3 virtual environment
-
 - Execute core.py to test changes
 
-$ python muzikdumpster/core.py -a -f muzik-dumpster/tests/resources
-
-- Install into virtualenv site-packages to run as an executable
-
-$ pip install .
-
-or
-
-$ python setup.py sdist
-$ pip install dist/muzid-dumpster-x.x.x.tar.gz
-$ muzik-dumpster -a -f muzik-dumpster/tests/resources
+$ python muzikdumpster/muzikdumpster.py -a -f tests/resources
 
 Packaging
 =========
