@@ -36,7 +36,7 @@ def get_filepaths(path):
     return dir_path, file_paths
 
 def generate_archive(albums, location):
-    archive_location = os.path.join(location, f"muzik-dumpster-archive-{datetime.datetime.now().strftime(':%Y-%m-%d_%H:%M:%S')}.txt")
+    archive_location = os.path.join(location, f"muzik-dumpster-archive-{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.txt")
     f = FileObj(archive_location, 'w+')
     for album in albums:
         f.file.write(album + "\n")
