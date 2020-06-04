@@ -39,7 +39,7 @@ class Collection(object):
         return self._extract_raw(collection)
 
     def _process_file(self, filename):
-        print("[debug] processing file, filename: {0}".format(filename))
+        print(f"[debug] processing file, filename: {filename}")
         fo = FileObj(filename, 'r+')
         lines = fo.file.readlines()
         albums = []
@@ -53,7 +53,7 @@ class Collection(object):
         line = line.strip()
         tokens = line.split("|")
         if len(tokens) < 3:
-            raise Exception("invalid number of tokens: {0}, line: {1}".format(len(tokens), line))
+            raise Exception(f"invalid number of tokens: {len(tokens)}, line: {line}")
         album = Album(tokens[0].strip(),
                       tokens[1].strip(),
                       tokens[2].strip(),
