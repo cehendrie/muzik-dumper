@@ -1,5 +1,5 @@
 from operator import attrgetter
-from fileobj import FileObj
+from .fileobj import FileObj
 
 
 class Album(object):

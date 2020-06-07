@@ -3,8 +3,8 @@ import os
 
 from argparse import ArgumentParser
 
-from collection import Collection
-from fileobj import FileObj
+from .collection import Collection
+from .fileobj import FileObj
 
 
 def arg_parser():
