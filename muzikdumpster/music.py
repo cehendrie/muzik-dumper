@@ -1,7 +1,5 @@
 from operator import itemgetter
 
-from .fileobj import FileObj
-
 
 class Music(object):
     """
@@ -28,8 +26,8 @@ class Music(object):
 
     def _process_file(self, filename):
         print(f"[debug] processing file, filename: {filename}")
-        fo = FileObj(filename, 'r+')
-        lines = fo.file.readlines()
+        with open(filename, 'r+') as f:
+            lines = f.readlines()
         artists = []
         for line in lines:
             line = line.strip()
