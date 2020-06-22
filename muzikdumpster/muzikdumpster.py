@@ -3,6 +3,7 @@ import os
 
 from argparse import ArgumentParser
 
+from .music import Music
 from .collection import Collection
 from .fileobj import FileObj
 
@@ -47,8 +48,10 @@ def main():
     if len(files) == 0:
         print("no file to process")
         exit(0)
-    collection = Collection(files)
-    albums = collection.build_collection()
+    # collection = Collection(files)
+    # albums = collection.build_collection()
+    music = Music(files)
+    albums = music.generate()
     for album in albums:
         print(album)
     if args.archive == True:
