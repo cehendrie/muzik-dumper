@@ -22,7 +22,7 @@ class Music(object):
         music = []
         for filename in self.files:
             music.extend(self._process_file(filename))
-        return self._extract_raw(sorted(music, key=lambda tup: (tup[0], tup[2])))
+        return self._extract_raw(sorted(music, key=lambda tup: (tup[0], tup[1])))
 
     def _process_file(self, filename):
         print(f"[debug] processing file, filename: {filename}")
